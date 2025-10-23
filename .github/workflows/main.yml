@@ -1,43 +1,43 @@
-name: Deploy to Server via FTP
+name: Deploy to Server via SFTP
 
 on:
   push:
     branches:
-    - master
+      - master   # ou 'main', se seu repositório usa esse nome
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.2'
-        extensions: mbstring, pdo_mysql, xml, ctype, json, openssl, tokenizer
-        coverage: none
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo_mysql, xml, ctype, json, openssl, tokenizer
+          coverage: none
 
-    - name: Install dependencies
-      run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+      - name: Install dependencies
+        run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
-    - name: Build assets
-      run: |
-        npm ci
-        npm run build
+      - name: Build assets
+        run: |
+          npm ci
+          npm run build
 
-    - name: Upload to FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        protocol: ftps
-        port: 21
-        local-dir: ./
-        server-dir: /home/u552023397/domains/leandrodev.com.br/public_html/
+      - name: Deploy via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          username: ${{ secrets.FTP_USERNAME }}
+          server: ${{ secrets.FTP_SERVER }}
+          port: 65002
+          password: ${{ secrets.FTP_PASSWORD }}
+          local_path: './'
+          remote_path: '/home/u552023397/domains/leandrodev.com.br/public_html/'
+          sftp_only: true
 
-    - name: Deploy url
-      run: curl -X GET https://leandrodev.com.br/deploy
+      - name: Deploy url
+        run: curl -X GET https://leandrodev.com.br/deploy
