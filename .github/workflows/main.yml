@@ -35,7 +35,7 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./
-        server-dir: /public_html/
+        server-dir: /u552023397/domains/leandrodev.com.br/public_html/
 
     - name: Deploy url
       run: curl -X GET https://leandrodev.com.br/deploy
