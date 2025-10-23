@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Jobs\TestQueueJob;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schedule;
 
 Route::middleware(['auth'])->group(function() {
     Route::get('/', function () {
@@ -21,3 +25,14 @@ Route::middleware(['auth'])->group(function() {
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
 });
+
+Schedule::call(function() {
+    Log::info('Tarefa agendada executada com sucesso!');
+})->everyMinute();
+
+Route::get('/deploy', function() {
+    Artisan::call('app:deploy');
+});
+
+
+
