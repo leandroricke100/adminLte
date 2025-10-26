@@ -2,7 +2,7 @@ name: Deploy Laravel to VPS
 
 on:
   push:
-    branches: [main]   # <- dispara quando você fizer push no main
+    branches: [master]   # <- dispara quando você fizer push no main
 
 jobs:
   deploy:
