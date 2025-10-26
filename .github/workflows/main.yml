@@ -2,7 +2,7 @@ name: Deploy Laravel to VPS
 
 on:
   push:
-    branches: [master]   # <- dispara quando você fizer push no main
+    branches: [master]   # dispara quando você fizer push no master
 
 jobs:
   deploy:
@@ -20,10 +20,10 @@ jobs:
             set -e
             cd /var/www/leandrodev.com.br
 
-            # Garante que o código no servidor é exatamente o do main
+            # Garante que o código no servidor é exatamente o do master
             git fetch origin
-            git checkout -B main origin/main
-            git reset --hard origin/main
+            git checkout -B master origin/master
+            git reset --hard origin/master
 
             composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
