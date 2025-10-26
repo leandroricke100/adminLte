@@ -5,7 +5,7 @@
         <div class="login-logo"> <a href="{{ route('login') }}"><b>Admin</b>LTE</a> </div> <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in to start your session. #Deploy3</p>
+                <p class="login-box-msg">Sign in to start your session. #Deploy4</p>
 
                 @session('status')
                 <div class="alert alert-success" role="alert">
